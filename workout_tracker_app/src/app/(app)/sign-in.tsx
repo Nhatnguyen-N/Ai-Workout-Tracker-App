@@ -1,6 +1,7 @@
 import { useSignIn } from "@clerk/clerk-expo";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   Text,
@@ -24,6 +25,11 @@ export default function SignIn() {
   // Handle the submission of the sign-in form
   const onSignInPress = async () => {
     if (!isLoaded) return;
+    if (!emailAddress || !password) {
+      Alert.alert("Error", "Please fill in all fiedlds");
+      return;
+    }
+    setIsLoading(true);
 
     // Start the sign-in process using the email and password provided
     try {
@@ -46,6 +52,8 @@ export default function SignIn() {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -90,7 +98,7 @@ export default function SignIn() {
                 </Text>
                 <View
                   className="flex-row items-center bg-gray-50 rounded-xl px-4
-            py-4 border border-gray-200"
+                     py-4 border border-gray-200"
                 >
                   <Ionicons name="mail-outline" size={20} color={"#6B7280"} />
                   <TextInput
@@ -111,7 +119,7 @@ export default function SignIn() {
                 </Text>
                 <View
                   className="flex-row items-center bg-gray-50 rounded-xl
-            px-4 py-4 border border-gray-200"
+                    px-4 py-4 border border-gray-200"
                 >
                   <Ionicons
                     name="lock-closed-outline"
@@ -151,7 +159,7 @@ export default function SignIn() {
               </View>
             </TouchableOpacity>
             {/* Divider */}
-            <View className="flex-row items-center my-4">
+            <View className="flex-row items-center mb-4">
               <View className="flex-1 h-px bg-gray-200" />
               <Text className="px-4 text-gray-500 text-sm">or</Text>
               <View className="flex-1 h-px bg-gray-200" />
@@ -159,7 +167,17 @@ export default function SignIn() {
             {/* Google Sign In Button */}
             <GoogleSignIn />
             {/* To be implemented */}
+            {/* Sign Up Link */}
+            <View className="flex-row justify-center items-center mt-4">
+              <Text className="text-gray-600">Don&apos;t have an account?</Text>
+              <Link href={"/(app)/sign-up"} asChild>
+                <TouchableOpacity>
+                  <Text className="text-blue-600 font-semibold">Sign Up</Text>
+                </TouchableOpacity>
+              </Link>
+            </View>
           </View>
+
           {/* footer section */}
           <View className="pb-6">
             <Text className="text-center text-gray-500 text-sm">
