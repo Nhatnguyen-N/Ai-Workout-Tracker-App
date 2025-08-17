@@ -32,7 +32,7 @@ export type Workout = {
     sets?: Array<{
       reps?: number
       weight?: number
-      weightUnit?: 'lbs' | 'lg'
+      weightUnit?: 'lbs' | 'kg'
       _type: 'exerciseSet'
       _key: string
     }>

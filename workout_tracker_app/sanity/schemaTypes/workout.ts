@@ -79,7 +79,7 @@ export default defineType({
                       options: {
                         list: [
                           { title: 'Pounds (lbs)', value: 'lbs' },
-                          { title: 'Kilograms (kg)', value: "lg" }
+                          { title: 'Kilograms (kg)', value: "kg" }
                         ],
                         layout: 'radio',
                       },
