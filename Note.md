@@ -5,6 +5,7 @@ day 2:  1:51:14.
 day 3:  2:35:21.
 day 4:  3:11:12.
 day 5:  3:55:00.
+day 6:  Done.
 
 auth===>clerk.
 sanity ===> backend. 

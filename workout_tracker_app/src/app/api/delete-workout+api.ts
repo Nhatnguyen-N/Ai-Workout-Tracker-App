@@ -5,8 +5,6 @@ export async function POST(request: Request) {
 
   try {
     await adminClient.delete(workoutId as string);
-    console.log("Successfully", workoutId);
-
     return Response.json({
       success: true,
       message: "Workout deleted successfully",

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import * as WebBrowser from "expo-web-browser";
 import * as AuthSession from "expo-auth-session";
 import { useSSO } from "@clerk/clerk-expo";
-import { View, Button, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 export const useWarmUpBrowser = () => {
@@ -29,14 +29,13 @@ export default function GoogleSignIn() {
   const onPress = useCallback(async () => {
     try {
       // Start the authentication process by calling `startSSOFlow()`
-      const { createdSessionId, setActive, signIn, signUp } =
-        await startSSOFlow({
-          strategy: "oauth_google",
-          // For web, defaults to current path
-          // For native, you must pass a scheme, like AuthSession.makeRedirectUri({ scheme, path })
-          // For more info, see https://docs.expo.dev/versions/latest/sdk/auth-session/#authsessionmakeredirecturioptions
-          redirectUrl: AuthSession.makeRedirectUri(),
-        });
+      const { createdSessionId, setActive } = await startSSOFlow({
+        strategy: "oauth_google",
+        // For web, defaults to current path
+        // For native, you must pass a scheme, like AuthSession.makeRedirectUri({ scheme, path })
+        // For more info, see https://docs.expo.dev/versions/latest/sdk/auth-session/#authsessionmakeredirecturioptions
+        redirectUrl: AuthSession.makeRedirectUri(),
+      });
 
       // If sign in was successful, set the active session
       if (createdSessionId) {
@@ -52,6 +51,7 @@ export default function GoogleSignIn() {
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -5,12 +5,13 @@ import {
   ScrollView,
   RefreshControl,
   TouchableOpacity,
+  StatusBar,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-expo";
 import { defineQuery } from "groq";
 import { client } from "@/src/lib/sanity/client";
-import { GetWorkoutsQueryResult, Workout } from "@/src/lib/sanity/types";
+import { GetWorkoutsQueryResult } from "@/src/lib/sanity/types";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { formatDuration } from "@/lib/utils";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -43,7 +44,7 @@ export default function History() {
   const [workouts, setWorkouts] = useState<GetWorkoutsQueryResult>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  // const { refresh } = useLocalSearchParams();
+  const { refresh } = useLocalSearchParams();
 
   const fetchWorkouts = async () => {
     if (!user?.id) return;
@@ -64,14 +65,14 @@ export default function History() {
   }, [user?.id]);
 
   // Handle refresh parameter from deleted workout
-  // useEffect(() => {
-  //   if (refresh === "true") {
-  //     fetchWorkouts();
-  //     // Clear the refresh parameter from the URL
-  //     router.replace("/(app)/(tabs)/history");
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [refresh]);
+  useEffect(() => {
+    if (refresh === "true") {
+      fetchWorkouts();
+      // Clear the refresh parameter from the URL
+      router.replace("/(app)/(tabs)/history");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refresh]);
   const onRefresh = () => {
     setRefreshing(true);
     fetchWorkouts();
@@ -129,7 +130,8 @@ export default function History() {
     );
   }
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-white">
+      <StatusBar barStyle={"dark-content"} />
       {/* Header */}
       <View className="px-6 py-4 bg-white border-b border-gray-200">
         <Text className="text-2xl font-bold text-gray-900">

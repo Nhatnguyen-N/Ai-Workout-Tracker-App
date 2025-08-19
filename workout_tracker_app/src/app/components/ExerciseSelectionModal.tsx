@@ -9,7 +9,6 @@ import {
   RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "expo-router";
 import { useWorkoutStore } from "@/store/workout-store";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
